@@ -7,7 +7,7 @@ const axios = require("axios");
 const moment = require("moment");
 
 const command = process.argv[2];
-const userInput = process.argv.slice(3).join(" ");
+const userInput = process.argv.slice(3).join("+");
 
 switch (command) {
   case "concert-this":
@@ -42,11 +42,17 @@ switch (command) {
   case "movie-this":
     axios
       .get(
-        "http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy"
+        "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy"
       )
       .then(function(response) {
-        // Then we print out the imdbRating
-        console.log("The movie's rating is: " + response.data.imdbRating);
+        console.log(`Title: ${response.data.Title}`)
+        console.log(`Release Year: ${response.data.Year}`)
+        console.log(`IMDB Rating: ${response.data.imdbRating}`);
+        console.log(`Rotten Tomatoes Rating: ${response.data.Ratings[1].Value}`)
+        console.log(`Country: ${response.data.Country}`)
+        console.log(`Language: ${response.data.Language}`)
+        console.log(`Plot: ${response.data.Plot}`)
+        console.log(`Actors: ${response.data.Actors}`)
       });
     break;
   case "do-what-it-says":
